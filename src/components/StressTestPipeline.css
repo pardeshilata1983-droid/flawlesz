@@ -1,0 +1,229 @@
+.nk-pipeline-container {
+  position: relative;
+  width: 100%;
+  margin-top: 36px;
+  padding: 16px 0 24px;
+}
+
+/* Connector Line Track */
+.nk-pipeline-track {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nk-pipeline-base-line {
+  position: absolute;
+  background-color: #E0DEDA;
+  border-radius: 1px;
+}
+
+.nk-pipeline-fill-line {
+  position: absolute;
+  background-color: #E8481C;
+  border-radius: 1px;
+  transition: width 120ms cubic-bezier(0.16, 1, 0.3, 1), height 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width, height;
+}
+
+/* Pipeline Grid (Desktop) */
+.nk-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Pipeline Step Item */
+.nk-pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  user-select: none;
+}
+
+/* Icon Wrapper & Circle */
+.nk-pipeline-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.nk-pipeline-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 1.5px solid #E0DEDA;
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+/* Active State */
+.nk-pipeline-icon-circle.is-active {
+  background-color: #E8481C;
+  border-color: #E8481C;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(232, 72, 28, 0.3);
+}
+
+/* Pulse Animation when unlocked */
+@keyframes stepUnlockPulse {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nk-pipeline-icon-circle.pulse-unlock {
+  animation: stepUnlockPulse 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Step Content Section */
+.nk-pipeline-content {
+  width: 100%;
+  opacity: 0.6;
+  transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nk-pipeline-step.is-active .nk-pipeline-content {
+  opacity: 1;
+}
+
+.nk-pipeline-step-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.nk-pipeline-step-num {
+  color: #71717A;
+  transition: color 300ms ease;
+}
+
+.nk-pipeline-step.is-active .nk-pipeline-step-num {
+  color: #111111;
+}
+
+.nk-pipeline-step-tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background-color: #EBEAE5;
+  color: #71717A;
+  letter-spacing: 0.06em;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.nk-pipeline-step.is-active .nk-pipeline-step-tag {
+  background-color: rgba(232, 72, 28, 0.1);
+  color: #E8481C;
+}
+
+.nk-pipeline-step-title {
+  font-size: 16.5px;
+  line-height: 1.35;
+  color: #4A4A4A;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  transition: color 300ms ease, font-weight 300ms ease;
+}
+
+.nk-pipeline-step.is-active .nk-pipeline-step-title {
+  color: #111111;
+  font-weight: 600;
+}
+
+.nk-pipeline-step-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #71717A;
+  margin: 0;
+  transition: color 300ms ease;
+}
+
+.nk-pipeline-step.is-active .nk-pipeline-step-desc {
+  color: #383838;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints (< 768px: Switch to Vertical Pipeline)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .nk-pipeline-container {
+    margin-top: 24px;
+    padding: 12px 0 20px;
+  }
+
+  .nk-pipeline-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .nk-pipeline-step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .nk-pipeline-icon-wrapper {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .nk-pipeline-content {
+    flex: 1;
+    padding-top: 2px;
+  }
+
+  .nk-pipeline-step-meta {
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nk-pipeline-grid {
+    gap: 28px;
+  }
+
+  .nk-pipeline-step {
+    gap: 16px;
+  }
+
+  .nk-pipeline-step-title {
+    font-size: 15.5px;
+  }
+
+  .nk-pipeline-step-desc {
+    font-size: 13px;
+  }
+}

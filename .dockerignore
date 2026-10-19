@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.aistudio
+*.log
+.env
+.env.example
+.shares_db.json

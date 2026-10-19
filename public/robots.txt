@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you
+Disallow: /flaw/thank-you
+Disallow: /flaw/console
+Disallow: /api/
+
+Sitemap: https://flaw.app/sitemap.xml

@@ -1,0 +1,8 @@
+{
+  "name": "Flaw",
+  "description": "AI-powered idea validation tool that searches the live web for competitors, pinpoints critical flaws, and proposes refined iterations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

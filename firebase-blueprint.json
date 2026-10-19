@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile with plan entitlements and onboarding metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "plan": { "type": "string", "enum": ["free", "pro", "ultra", "enterprise"] },
+        "user_type": { "type": "string" },
+        "onboarding_completed": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "createdAt"]
+    },
+    "validation": {
+      "title": "Validation",
+      "description": "Idea validation analysis result",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "idea": { "type": "string" },
+        "model": { "type": "string", "enum": ["orbit", "pulsar", "quasar"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "idea", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User account document"
+    },
+    "/users/{userId}/validations/{validationId}": {
+      "schema": "validation",
+      "description": "User's individual idea validations"
+    }
+  }
+}

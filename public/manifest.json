@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Flawlesz AI – Know Before You Build",
+  "short_name": "Flawlesz AI",
+  "description": "Flawlesz AI – Know Before You Build. Automated AI validation engine that uncovers edge-case risks, unit economic traps, and hidden competitors.",
+  "start_url": "/flaw",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F4F0",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/brand-logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

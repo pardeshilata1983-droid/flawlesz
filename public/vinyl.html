@@ -1,0 +1,562 @@
+<!-- Standalone Vinyl / Flaw Hero Section -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinyl — The record you once knew is playing somewhere now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=UnifrakturCook:wght@700&amp;family=Instrument+Sans:wght@400;500&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b0b0c;
+      --sky: #dbe6ee;
+      --nav-gap: clamp(1.1rem, 2.2vw, 2.15rem);
+      --pad-x: clamp(1.25rem, 4vw, 3.6rem);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --ease-in-out: cubic-bezier(.76, 0, .24, 1);
+      --poster: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&w=1920&q=85");
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--sky);
+      overflow-x: hidden;
+      font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--sky);
+    }
+
+    .hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      transform: scale(1.08);
+      filter: blur(14px);
+      opacity: 0;
+      animation: mediaIn 1.9s var(--ease) .1s forwards;
+    }
+
+    @keyframes mediaIn {
+      to {
+        transform: scale(1);
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+
+    .hero__media::before {
+      content: "";
+      position: absolute;
+      inset: -8%;
+      z-index: 0;
+      background: var(--poster) center 22%/cover no-repeat;
+      filter: blur(30px) saturate(104%);
+      transform: scale(1.05);
+      display: none;
+    }
+
+    .hero__media img,
+    .hero__media video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 62%;
+      display: block;
+    }
+
+    .hero__media img {
+      z-index: 1;
+    }
+
+    .hero__media video {
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .hero__media video.is-ready {
+      opacity: 1;
+    }
+
+    .hero__media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(226, 236, 243, .55) 0%, rgba(226, 236, 243, .18) 34%, rgba(226, 236, 243, 0) 58%),
+        radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 60%);
+    }
+
+    .nav {
+      position: relative;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: clamp(1.1rem, 2.4vw, 1.9rem) var(--pad-x);
+    }
+
+    .logo {
+      font-family: "UnifrakturCook", serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+      line-height: 1;
+      letter-spacing: .01em;
+      white-space: nowrap;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: var(--nav-gap);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .nav__links a {
+      font-size: clamp(.95rem, 1.05vw, 1.05rem);
+      letter-spacing: .005em;
+      padding: .15rem 0;
+      display: inline-block;
+      position: relative;
+    }
+
+    .nav__links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .5s var(--ease);
+    }
+
+    .nav__links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .btn-play {
+      background: var(--ink);
+      color: #ffffff;
+      border-radius: 6px;
+      padding: .72rem 1.15rem;
+      font-size: .95rem;
+      line-height: 1;
+      white-space: nowrap;
+      transition: transform .45s var(--ease), background-color .45s var(--ease), box-shadow .45s var(--ease);
+      display: inline-block;
+    }
+
+    .btn-play:hover {
+      transform: translateY(-2px);
+      background-color: #1e1e21;
+      box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .6);
+    }
+
+    .btn-play:active {
+      transform: translateY(0);
+    }
+
+    .burger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      margin-right: -8px;
+      position: relative;
+      z-index: 60;
+      border-radius: 8px;
+      flex: 0 0 auto;
+    }
+
+    .burger span {
+      position: absolute;
+      left: 11px;
+      width: 22px;
+      height: 1.6px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform .55s var(--ease-in-out), opacity .3s ease, width .55s var(--ease-in-out);
+    }
+
+    .burger span:nth-child(1) { top: 17px; }
+    .burger span:nth-child(2) { top: 22px; width: 15px; }
+    .burger span:nth-child(3) { top: 27px; }
+
+    .burger.is-active span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+    .burger.is-active span:nth-child(2) { opacity: 0; transform: translateX(10px); }
+    .burger.is-active span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+    .hero__inner {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: clamp(1.5rem, 5vh, 4.5rem) var(--pad-x) 0;
+      pointer-events: none;
+    }
+
+    .headline {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(2.7rem, 6.3vw, 6.75rem);
+      line-height: 1.06;
+      letter-spacing: -.005em;
+      text-align: center;
+    }
+
+    .line {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-bottom: .06em;
+      margin-bottom: -.06em;
+    }
+
+    .line > span {
+      display: block;
+      transform: translateY(110%);
+      opacity: 0;
+      animation: lineUp 1.25s var(--ease) forwards;
+    }
+
+    @keyframes lineUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .line:nth-child(1) > span { animation-delay: .55s; }
+    .line:nth-child(2) > span { animation-delay: .68s; }
+
+    .rise {
+      opacity: 0;
+      transform: translateY(-14px);
+      animation: rise .95s var(--ease) forwards;
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .d1 { animation-delay: .18s; }
+    .d2 { animation-delay: .26s; }
+    .d3 { animation-delay: .32s; }
+    .d4 { animation-delay: .38s; }
+    .d5 { animation-delay: .44s; }
+    .d6 { animation-delay: .52s; }
+
+    .menu {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 var(--pad-x);
+      background: rgba(233, 240, 246, .92);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      clip-path: inset(0 0 100% 0);
+      visibility: hidden;
+      transition: clip-path .85s var(--ease-in-out), visibility 0s linear .85s;
+    }
+
+    .menu.is-open {
+      clip-path: inset(0 0 0 0);
+      visibility: visible;
+      transition: clip-path .85s var(--ease-in-out), visibility 0s linear 0s;
+    }
+
+    .menu__list { list-style: none; margin: 0; padding: 0; }
+    .menu__list li { overflow: hidden; }
+
+    .menu__list a {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(2.35rem, 12vw, 3.4rem);
+      line-height: 1.22;
+      padding: .12em 0;
+      display: block;
+      transform: translateY(115%);
+      opacity: 0;
+      transition: transform .8s var(--ease), opacity .6s ease;
+    }
+
+    .menu.is-open .menu__list a { transform: translateY(0); opacity: 1; }
+    .menu.is-open .menu__list li:nth-child(1) a { transition-delay: .26s; }
+    .menu.is-open .menu__list li:nth-child(2) a { transition-delay: .33s; }
+    .menu.is-open .menu__list li:nth-child(3) a { transition-delay: .40s; }
+    .menu.is-open .menu__list li:nth-child(4) a { transition-delay: .47s; }
+
+    .menu__rule {
+      height: 1px;
+      background: rgba(11, 11, 12, .16);
+      margin: 2.2rem 0 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .9s var(--ease);
+    }
+
+    .menu.is-open .menu__rule { transform: scaleX(1); transition-delay: .5s; }
+
+    .menu__foot {
+      margin-top: 2.2rem;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: transform .8s var(--ease), opacity .6s ease;
+    }
+
+    .menu.is-open .menu__foot { opacity: 1; transform: translateY(0); transition-delay: .56s; }
+    .menu__foot .btn-play { display: inline-block; padding: .95rem 1.6rem; font-size: 1rem; }
+
+    @media (max-width: 900px) {
+      .nav__links, .nav__right .btn-play { display: none; }
+      .burger { display: block; }
+      .hero__media img, .hero__media video { object-position: center 60%; }
+      .hero__inner { align-items: flex-start; }
+      .line { white-space: normal; }
+      .headline { font-size: clamp(2.4rem, 6.4vw, 3.6rem); max-width: 15ch; }
+    }
+
+    @media (max-width: 900px) and (orientation: portrait) {
+      .hero__media::before { display: block; }
+      .hero__media video, .hero__media img {
+        top: auto;
+        bottom: 0;
+        height: 64svh;
+        object-position: center 62%;
+        -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 9%, #000 20%);
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 9%, #000 20%);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .headline { font-size: clamp(2.15rem, 9.4vw, 3.1rem); line-height: 1.12; max-width: 11ch; }
+      .hero__inner { padding-top: clamp(1.75rem, 7vh, 3rem); }
+      .hero__media img, .hero__media video { object-position: center 58%; }
+    }
+
+    @media (max-width: 380px) {
+      .headline { font-size: 2rem; }
+    }
+
+    @media (max-height: 520px) and (orientation: landscape) {
+      .headline { font-size: clamp(1.7rem, 5vw, 2.4rem); max-width: 22ch; }
+      .hero__inner { padding-top: .75rem; }
+      .menu__list a { font-size: clamp(1.4rem, 5vw, 1.9rem); }
+      .menu__rule { margin-top: 1.2rem; }
+      .menu__foot { margin-top: 1.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: .01ms !important;
+      }
+      .hero__media { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .line > span { transform: none !important; opacity: 1 !important; }
+      .rise { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero__media">
+      <img
+        src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+        alt="A vintage turntable resting on a mossy rock in an alpine meadow at golden hour"
+      />
+      <video
+        id="heroVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+        aria-hidden="true"
+      >
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260908_125738_eb584080-9f98-489e-adb2-014760aa34da.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <header class="nav" aria-label="Primary">
+      <a href="#" class="logo rise d1" aria-label="Vinyl — home">Vinyl</a>
+      <ul class="nav__links">
+        <li><a href="#discover" class="rise d2">Playlist</a></li>
+        <li><a href="#library" class="rise d3">Vintage</a></li>
+        <li><a href="#artists" class="rise d4">Singers</a></li>
+        <li><a href="#pricing" class="rise d5">Members</a></li>
+      </ul>
+      <div class="nav__right">
+        <a href="#play" class="btn-play rise d6">Drop Now</a>
+        <button
+          class="burger rise d6"
+          id="burger"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="hero__inner">
+      <h1 class="headline">
+        <span class="line"><span>The record you once knew</span></span>
+        <span class="line"><span>is playing somewhere now</span></span>
+      </h1>
+    </div>
+  </section>
+
+  <div class="menu" id="menu">
+    <nav aria-label="Mobile">
+      <ul class="menu__list">
+        <li><a href="#discover">Playlist</a></li>
+        <li><a href="#library">Vintage</a></li>
+        <li><a href="#artists">Singers</a></li>
+        <li><a href="#pricing">Members</a></li>
+      </ul>
+    </nav>
+    <div class="menu__rule"></div>
+    <div class="menu__foot">
+      <a href="#play" class="btn-play">Drop Now</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var burger = document.getElementById('burger');
+      var menu = document.getElementById('menu');
+      var video = document.getElementById('heroVideo');
+      var isOpen = false;
+
+      function setMenu(next) {
+        isOpen = !!next;
+        if (menu) menu.classList.toggle('is-open', isOpen);
+        if (burger) {
+          burger.classList.toggle('is-active', isOpen);
+          burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          burger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+        }
+        document.body.classList.toggle('menu-open', isOpen);
+      }
+
+      if (burger) {
+        burger.addEventListener('click', function () {
+          setMenu(!isOpen);
+        });
+      }
+
+      if (menu) {
+        menu.addEventListener('click', function (e) {
+          if (e.target && e.target.closest('a')) {
+            setMenu(false);
+          }
+        });
+      }
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isOpen) {
+          setMenu(false);
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        if (isOpen && window.innerWidth > 900) {
+          setMenu(false);
+        }
+      });
+
+      if (video) {
+        function reveal() {
+          video.classList.add('is-ready');
+        }
+
+        if (video.readyState >= 3) {
+          reveal();
+        } else {
+          video.addEventListener('loadeddata', reveal, { once: true });
+        }
+
+        function kick() {
+          var p = video.play();
+          if (p && p.catch) {
+            p.catch(function () {});
+          }
+        }
+
+        kick();
+        window.addEventListener('touchstart', kick, { once: true, passive: true });
+        window.addEventListener('click', kick, { once: true });
+      }
+    })();
+  </script>
+</body>
+</html>
